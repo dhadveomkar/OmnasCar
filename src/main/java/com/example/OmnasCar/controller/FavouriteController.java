@@ -19,14 +19,7 @@ public class FavouriteController {
 
     @PostMapping
 public ResponseEntity<FavouriteDTO> addFavourite(@RequestBody Favourite fav) {
-    Favourite saved = favService.addFavourite(fav);
-    FavouriteDTO dto = new FavouriteDTO();
-    dto.setId(saved.getId());
-    dto.setUserName(saved.getUser().getName());
-    dto.setCarName(saved.getCar().getName());
-    dto.setFavouritedAt(saved.getFavouritedAt());
-
-    return ResponseEntity.ok(dto);
+    return ResponseEntity.ok(favService.addFavourite(fav));
 }
 
     @DeleteMapping

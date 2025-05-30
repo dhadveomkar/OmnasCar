@@ -1,6 +1,7 @@
 package com.example.OmnasCar.service;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,19 +9,46 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.OmnasCar.model.Car;
 import com.example.OmnasCar.model.Favourite;
 import com.example.OmnasCar.model.FavouriteDTO;
+import com.example.OmnasCar.model.User;
+import com.example.OmnasCar.repository.CarRepository;
 import com.example.OmnasCar.repository.FavouriteRepository;
+import com.example.OmnasCar.repository.UserRepository;
 
 @Service
 public class FavouriteService {
    @Autowired
     private FavouriteRepository favRepo;
 
-    public Favourite addFavourite(Favourite fav) {
-        fav.setFavouritedAt(java.time.LocalDateTime.now());
-        return favRepo.save(fav);
-    }
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private CarRepository carRepo;
+
+    public FavouriteDTO addFavourite(Favourite fav) {
+    User user = userRepo.findById(fav.getUser().getId())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Car car = carRepo.findById(fav.getCar().getId())
+            .orElseThrow(() -> new RuntimeException("Car not found"));
+
+    fav.setUser(user);
+    fav.setCar(car);
+    fav.setFavouritedAt(LocalDateTime.now());
+
+    Favourite saved = favRepo.save(fav);
+
+    FavouriteDTO dto = new FavouriteDTO();
+    dto.setId(saved.getId());
+    dto.setUserName(user.getName());
+    dto.setCarName(car.getName());
+    dto.setFavouritedAt(saved.getFavouritedAt());
+
+    return dto;
+}
 
     public void removeFavourite(Long userId, Long carId) {
         Favourite fav = favRepo.findByUserIdAndCarId(userId, carId);
