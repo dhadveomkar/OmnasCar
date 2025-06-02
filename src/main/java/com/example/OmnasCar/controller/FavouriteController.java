@@ -18,9 +18,9 @@ public class FavouriteController {
     private FavouriteService favService;
 
     @PostMapping
-public ResponseEntity<FavouriteDTO> addFavourite(@RequestBody Favourite fav) {
-    return ResponseEntity.ok(favService.addFavourite(fav));
-}
+    public ResponseEntity<FavouriteDTO> addFavourite(@RequestBody Favourite fav) {
+        return ResponseEntity.ok(favService.addFavourite(fav));
+    }
 
     @DeleteMapping
     public ResponseEntity<Void> removeFavourite(@RequestParam Long userId, @RequestParam Long carId) {
@@ -29,14 +29,14 @@ public ResponseEntity<FavouriteDTO> addFavourite(@RequestBody Favourite fav) {
     }
 
     @GetMapping
-public ResponseEntity<List<FavouriteDTO>> getAllFavourites() {
-    return ResponseEntity.ok(favService.getAllFavourites());
-}
+    public ResponseEntity<List<FavouriteDTO>> getAllFavourites() {
+        return ResponseEntity.ok(favService.getAllFavourites());
+    }
 
     @GetMapping("/user/{userId}")
-public ResponseEntity<List<FavouriteDTO>> getUserFavourites(@PathVariable Long userId) {
-    return ResponseEntity.ok(favService.getFavouriteDTOs(userId));
-}
+    public ResponseEntity<List<FavouriteDTO>> getUserFavourites(@PathVariable Long userId) {
+        return ResponseEntity.ok(favService.getFavouriteDTOs(userId));
+    }
 
     @GetMapping("/exists")
     public ResponseEntity<Boolean> isFavourite(@RequestParam Long userId, @RequestParam Long carId) {
@@ -44,5 +44,3 @@ public ResponseEntity<List<FavouriteDTO>> getUserFavourites(@PathVariable Long u
     }
 
 }
-
-

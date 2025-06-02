@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Favourite {
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,35 +23,35 @@ public class Favourite {
     private LocalDateTime favouritedAt;
 
     public Long getId() {
-    return id;
-}
+        return id;
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public User getUser() {
-    return user;
-}
+    public User getUser() {
+        return user;
+    }
 
-public void setUser(User user) {
-    this.user = user;
-}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-public Car getCar() {
-    return car;
-}
+    public Car getCar() {
+        return car;
+    }
 
-public void setCar(Car car) {
-    this.car = car;
-}
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
-public LocalDateTime getFavouritedAt() {
-    return favouritedAt;
-}
+    public LocalDateTime getFavouritedAt() {
+        return favouritedAt;
+    }
 
-public void setFavouritedAt(LocalDateTime favouritedAt) {
-    this.favouritedAt = favouritedAt;
-}
- 
+    public void setFavouritedAt(LocalDateTime favouritedAt) {
+        this.favouritedAt = favouritedAt;
+    }
+
 }

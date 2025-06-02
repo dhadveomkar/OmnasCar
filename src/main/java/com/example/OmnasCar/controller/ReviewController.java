@@ -18,7 +18,8 @@ import com.example.OmnasCar.service.ReviewService;
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {
- @Autowired private ReviewService reviewService;
+    @Autowired
+    private ReviewService reviewService;
 
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody Review review) {
@@ -26,12 +27,12 @@ public class ReviewController {
     }
 
     @GetMapping
-public ResponseEntity<List<ReviewDTO>> getAllReviews() {
-    return ResponseEntity.ok(reviewService.getAllReviews());
-}
+    public ResponseEntity<List<ReviewDTO>> getAllReviews() {
+        return ResponseEntity.ok(reviewService.getAllReviews());
+    }
 
     @GetMapping("/car/{carId}")
-public ResponseEntity<List<ReviewDTO>> getCarReviews(@PathVariable Long carId) {
-    return ResponseEntity.ok(reviewService.getReviewsDTOByCar(carId));
-}  
+    public ResponseEntity<List<ReviewDTO>> getCarReviews(@PathVariable Long carId) {
+        return ResponseEntity.ok(reviewService.getReviewsDTOByCar(carId));
+    }
 }

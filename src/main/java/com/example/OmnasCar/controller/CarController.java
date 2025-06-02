@@ -26,11 +26,11 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-public ResponseEntity<?> getCarById(@PathVariable Long id) {
-    return carRepository.findById(id)
-            .<ResponseEntity<?>>map(ResponseEntity::ok)
-            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found"));
-}
+    public ResponseEntity<?> getCarById(@PathVariable Long id) {
+        return carRepository.findById(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found"));
+    }
 
     @GetMapping("/brand")
     public List<Car> getByBrand(@RequestParam String brand) {
@@ -43,19 +43,19 @@ public ResponseEntity<?> getCarById(@PathVariable Long id) {
     }
 
     @GetMapping("/latest")
-public List<Car> getLatestCars() {
-    return carRepository.findByLatest(true);
-}
+    public List<Car> getLatestCars() {
+        return carRepository.findByLatest(true);
+    }
 
-@GetMapping("/upcoming")
-public List<Car> getUpcomingCars() {
-    return carRepository.findByUpcoming(true);
-}
+    @GetMapping("/upcoming")
+    public List<Car> getUpcomingCars() {
+        return carRepository.findByUpcoming(true);
+    }
 
-@GetMapping("/electric")
-public List<Car> getElectricCars() {
-    return carRepository.findByElectric(true);
-}
+    @GetMapping("/electric")
+    public List<Car> getElectricCars() {
+        return carRepository.findByElectric(true);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCar(@PathVariable Long id, @RequestBody Car updatedCar) {

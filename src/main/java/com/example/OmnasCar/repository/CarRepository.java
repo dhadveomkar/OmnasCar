@@ -19,4 +19,3 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findByElectric(boolean electric);
 }
-

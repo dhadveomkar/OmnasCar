@@ -1,10 +1,8 @@
 package com.example.OmnasCar.service;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +15,9 @@ import com.example.OmnasCar.repository.CarRepository;
 import com.example.OmnasCar.repository.ReviewRepository;
 import com.example.OmnasCar.repository.UserRepository;
 
-
 @Service
 public class ReviewService {
-  @Autowired
+    @Autowired
     private ReviewRepository reviewRepo;
 
     @Autowired
@@ -47,42 +44,41 @@ public class ReviewService {
         return reviewRepo.findByCarId(carId);
     }
 
-    
     public List<ReviewDTO> getReviewsDTOByCar(Long carId) {
-    List<Review> reviews = reviewRepo.findByCarId(carId);
-    List<ReviewDTO> reviewDTOs = new ArrayList<>();
+        List<Review> reviews = reviewRepo.findByCarId(carId);
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
 
-    for (Review review : reviews) {
-        ReviewDTO dto = new ReviewDTO();
-        dto.setId(review.getId());
-        dto.setRating(review.getRating());
-        dto.setComment(review.getComment());
-        dto.setCreatedAt(review.getCreatedAt());
-        dto.setUserName(review.getUser().getName());
-        dto.setCarName(review.getCar().getName());
+        for (Review review : reviews) {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setId(review.getId());
+            dto.setRating(review.getRating());
+            dto.setComment(review.getComment());
+            dto.setCreatedAt(review.getCreatedAt());
+            dto.setUserName(review.getUser().getName());
+            dto.setCarName(review.getCar().getName());
 
-        reviewDTOs.add(dto);
+            reviewDTOs.add(dto);
+        }
+
+        return reviewDTOs;
     }
 
-    return reviewDTOs;
-}
+    public List<ReviewDTO> getAllReviews() {
+        List<Review> reviews = reviewRepo.findAll();
+        List<ReviewDTO> reviewDTOs = new ArrayList<>();
 
-public List<ReviewDTO> getAllReviews() {
-    List<Review> reviews = reviewRepo.findAll();
-    List<ReviewDTO> reviewDTOs = new ArrayList<>();
+        for (Review review : reviews) {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setId(review.getId());
+            dto.setRating(review.getRating());
+            dto.setComment(review.getComment());
+            dto.setCreatedAt(review.getCreatedAt());
+            dto.setUserName(review.getUser().getName());
+            dto.setCarName(review.getCar().getName());
+            reviewDTOs.add(dto);
+        }
 
-    for (Review review : reviews) {
-        ReviewDTO dto = new ReviewDTO();
-        dto.setId(review.getId());
-        dto.setRating(review.getRating());
-        dto.setComment(review.getComment());
-        dto.setCreatedAt(review.getCreatedAt());
-        dto.setUserName(review.getUser().getName());
-        dto.setCarName(review.getCar().getName());
-        reviewDTOs.add(dto);
+        return reviewDTOs;
     }
-
-    return reviewDTOs;
-}
 
 }

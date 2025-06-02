@@ -10,15 +10,35 @@ public class FavouriteDTO {
 
     // Getters and setters
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getUserName() { return userName; }
-    public void setUserName(String userName) { this.userName = userName; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getCarName() { return carName; }
-    public void setCarName(String carName) { this.carName = carName; }
+    public String getUserName() {
+        return userName;
+    }
 
-    public LocalDateTime getFavouritedAt() { return favouritedAt; }
-    public void setFavouritedAt(LocalDateTime favouritedAt) { this.favouritedAt = favouritedAt; }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
+
+    public LocalDateTime getFavouritedAt() {
+        return favouritedAt;
+    }
+
+    public void setFavouritedAt(LocalDateTime favouritedAt) {
+        this.favouritedAt = favouritedAt;
+    }
 }

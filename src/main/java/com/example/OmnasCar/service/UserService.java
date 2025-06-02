@@ -15,13 +15,19 @@ public class UserService {
     private UserRepository userRepository;
 
     public User registerUser(User user) {
+        if (userRepository.existsByName(user.getName())) {
+            throw new RuntimeException("Username already exists");
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
         return userRepository.save(user);
     }
 
     public User loginUser(String email, String password) {
-    Optional<User> user = userRepository.findByEmailAndPassword(email, password);
-    return user.orElse(null); // Or throw an exception if preferred
-}
+        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+        return user.orElse(null); // Or throw an exception if preferred
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

@@ -14,7 +14,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private int rating; // e.g. 1–5 stars
     private String comment;
 
@@ -34,8 +34,6 @@ public class Review {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
 
     public int getRating() {
         return rating;
@@ -77,4 +75,3 @@ public class Review {
         this.createdAt = createdAt;
     }
 }
-
