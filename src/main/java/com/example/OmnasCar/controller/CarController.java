@@ -7,7 +7,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
@@ -72,12 +72,15 @@ public class CarController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCar(@PathVariable Long id) {
-        if (carRepository.existsById(id)) {
-            carRepository.deleteById(id);
-            return ResponseEntity.ok("Car deleted");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
-        }
+public ResponseEntity<?> deleteCar(@PathVariable Long id) {
+    if (carRepository.existsById(id)) {
+        carRepository.deleteById(id);
+        // ✅ Return a structured JSON response
+        return ResponseEntity.ok(Map.of("message", "Car deleted successfully"));
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", "Car not found"));
     }
+}
+
 }

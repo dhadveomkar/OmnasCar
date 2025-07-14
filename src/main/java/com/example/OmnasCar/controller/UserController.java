@@ -2,7 +2,7 @@ package com.example.OmnasCar.controller;
 
 import com.example.OmnasCar.model.User;
 import com.example.OmnasCar.repository.UserRepository;
-import com.example.OmnasCar.service.UserService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -12,34 +12,75 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
-
     @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        try {
-            User newUser = userService.registerUser(user);
-            return ResponseEntity.ok(newUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<?> signup(@RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Email already exists");
         }
+        userRepository.save(user);
+        return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(Collections.singletonMap("message", "Signup successful"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+    String email = credentials.get("email");
+    String password = credentials.get("password");
 
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    Optional<User> user = userRepository.findByEmail(email);
+    
+    if (user.isPresent()) {
+        System.out.println("DB password: " + user.get().getPassword());
+        System.out.println("Entered password: " + password);
+
+        if (user.get().getPassword().equals(password)) {
+            return ResponseEntity.ok(Collections.singletonMap("message", "Login successful"));
         }
     }
+
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                         .body(Collections.singletonMap("message", "Invalid credentials"));
+}
+
+@GetMapping("/profile")
+public ResponseEntity<?> getProfile(@RequestParam String email) {
+    Optional<User> user = userRepository.findByEmail(email);
+    if (user.isPresent()) {
+        return ResponseEntity.ok(user.get());
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap("message", "User not found"));
+    }
+}
+
+@PutMapping("/update")
+public ResponseEntity<?> updateUser(@RequestBody Map<String, String> updateData) {
+    String email = updateData.get("email");
+    String contact = updateData.get("contact");
+    String address = updateData.get("address");
+
+    Optional<User> userOptional = userRepository.findByEmail(email);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        user.setContact(contact);
+        user.setAddress(address);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(Collections.singletonMap("message", "Profile updated successfully"));
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                             .body(Collections.singletonMap("message", "User not found"));
+    }
+}
+
+
 
     @GetMapping
     public List<User> getAllUsers() {

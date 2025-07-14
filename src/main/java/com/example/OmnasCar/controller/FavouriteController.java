@@ -38,9 +38,6 @@ public class FavouriteController {
         return ResponseEntity.ok(favService.getFavouriteDTOs(userId));
     }
 
-    @GetMapping("/exists")
-    public ResponseEntity<Boolean> isFavourite(@RequestParam Long userId, @RequestParam Long carId) {
-        return ResponseEntity.ok(favService.isFavourite(userId, carId));
-    }
+    
 
 }

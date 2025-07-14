@@ -12,13 +12,31 @@ public class Car {
     private String name;
     private String brand;
     private String type;
+
     private double price;
+
     @Column(name = "is_latest", nullable = false)
     private boolean latest;
+
     @Column(name = "is_upcoming", nullable = false)
     private boolean upcoming;
+
     @Column(name = "is_electric", nullable = false)
     private boolean electric;
+
+    // ✅ Default constructor (required by JPA)
+    public Car() {}
+
+    // ✅ Parameterized constructor (optional)
+    public Car(String name, String brand, String type, double price, boolean latest, boolean upcoming, boolean electric) {
+        this.name = name;
+        this.brand = brand;
+        this.type = type;
+        this.price = price;
+        this.latest = latest;
+        this.upcoming = upcoming;
+        this.electric = electric;
+    }
 
     // Getters
     public Long getId() {
